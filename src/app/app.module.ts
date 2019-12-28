@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { GameInfoComponent } from './game-info/game-info.component';
+import { GameCellComponent } from './game-cell/game-cell.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GameInfoComponent
+    GameInfoComponent,
+    GameCellComponent
   ],
   imports: [
     BrowserModule
