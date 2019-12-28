@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { GameState } from './game-state.interface';
+import { Player } from './player.enum';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'tic-tac-toe';
+    gameState: GameState = {
+        turn: Player.X
+    };
 }
