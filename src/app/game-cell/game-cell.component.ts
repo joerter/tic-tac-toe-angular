@@ -10,4 +10,5 @@ export class GameCellComponent {
     @Input() cellState: CellState;
 
     xCellState = CellState.X;
+    oCellState = CellState.O;
 }

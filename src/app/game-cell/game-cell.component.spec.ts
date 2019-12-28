@@ -6,17 +6,31 @@ describe('GameCell Component', () => {
     let spectator: Spectator<GameCellComponent>;
     const createComponent = createComponentFactory(GameCellComponent);
 
+    let cellState = CellState.Blank;
+
     beforeEach(() => (spectator = createComponent()));
 
     it('should be blank when CellState is Blank', () => {
+        cellState = CellState.Blank;
+        spectator.setInput('cellState', cellState);
+        spectator.detectChanges();
+
         expect(spectator.query('.cell')).toContainText('');
     });
 
     it('should contain an X when CellState is X', () => {
-        const cellState = CellState.X;
+        cellState = CellState.X;
         spectator.setInput('cellState', cellState);
         spectator.detectChanges();
 
         expect(spectator.query('.cell')).toContainText('X');
+    });
+
+    it('should contain an O when CellState is O', () => {
+        cellState = CellState.O;
+        spectator.setInput('cellState', cellState);
+        spectator.detectChanges();
+
+        expect(spectator.query('.cell')).toContainText('O');
     });
 });

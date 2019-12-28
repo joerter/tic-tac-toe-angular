@@ -1,4 +1,5 @@
 export enum CellState {
     Blank,
-    X
+    X,
+    O
 }
