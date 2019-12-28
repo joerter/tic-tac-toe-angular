@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { GameState } from './game-state.interface';
 import { Player } from './player.enum';
+import { CellState } from './cell-state.enum';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,11 @@ import { Player } from './player.enum';
 })
 export class AppComponent {
     gameState: GameState = {
-        turn: Player.X
+        turn: Player.X,
+        cellStates: [
+            [CellState.Blank, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank]
+        ]
     };
 }
