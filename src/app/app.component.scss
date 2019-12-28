@@ -15,24 +15,12 @@
     display: grid;
     grid-template-columns: repeat(3, 200px);
     grid-template-rows: repeat(3, 200px);
+}
 
-    .cell {
-        border: 1px solid black;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-
-        &::before {
-            font-size: 10rem;
-        }
-
-        &.x::before {
-            content: "X";
-        }
-
-        &.o::before {
-            content: "O";
-        }
-    }
+.cell {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }

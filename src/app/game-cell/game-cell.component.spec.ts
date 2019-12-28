@@ -15,7 +15,7 @@ describe('GameCell Component', () => {
         spectator.setInput('cellState', cellState);
         spectator.detectChanges();
 
-        expect(spectator.query('.cell')).toContainText('');
+        expect(spectator.query('.cell-content')).toContainText('');
     });
 
     it('should contain an X when CellState is X', () => {
@@ -23,7 +23,7 @@ describe('GameCell Component', () => {
         spectator.setInput('cellState', cellState);
         spectator.detectChanges();
 
-        expect(spectator.query('.cell')).toContainText('X');
+        expect(spectator.query('.cell-content')).toContainText('X');
     });
 
     it('should contain an O when CellState is O', () => {
@@ -31,6 +31,6 @@ describe('GameCell Component', () => {
         spectator.setInput('cellState', cellState);
         spectator.detectChanges();
 
-        expect(spectator.query('.cell')).toContainText('O');
+        expect(spectator.query('.cell-content')).toContainText('O');
     });
 });
