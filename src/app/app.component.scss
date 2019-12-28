@@ -1,18 +1,34 @@
 .tic-tac-toe {
-    height: 100vh;
-    width: 100%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  align-items: center;
 }
 
 .board {
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 200px);
-    grid-template-rows: repeat(3, 200px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  grid-template-rows: repeat(3, 200px);
 
-    .cell {
-        border: 1px solid black;
+  .cell {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &::before {
+      font-size: 10rem;
     }
+
+    &.x::before {
+      content: "X";
+    }
+
+    &.o::before {
+      content: "O";
+    }
+  }
 }
