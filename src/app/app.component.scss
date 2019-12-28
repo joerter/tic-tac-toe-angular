@@ -1,34 +1,38 @@
 .tic-tac-toe {
-  height: 100vh;
-  width: 100%;
-  display: grid;
-  justify-items: center;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 2rem;
+}
+
+.game-info {
+    flex: 1 1 40%;
+    text-align: center;
 }
 
 .board {
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 200px);
-  grid-template-rows: repeat(3, 200px);
+    flex: 1 1 60%;
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    grid-template-rows: repeat(3, 200px);
 
-  .cell {
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+    .cell {
+        border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
 
-    &::before {
-      font-size: 10rem;
+        &::before {
+            font-size: 10rem;
+        }
+
+        &.x::before {
+            content: "X";
+        }
+
+        &.o::before {
+            content: "O";
+        }
     }
-
-    &.x::before {
-      content: "X";
-    }
-
-    &.o::before {
-      content: "O";
-    }
-  }
 }
