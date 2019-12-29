@@ -1,7 +1,18 @@
 import { Player } from './player.enum';
-import { CellState } from './cell-state.enum';
+import { CellState, CellStates } from './cell-state.enum';
 
 export interface GameState {
     turn: Player;
-    cellStates: CellState[][];
+    cellStates: CellStates;
+}
+
+export function initialGameState(): GameState {
+    return {
+        turn: Player.X,
+        cellStates: [
+            [CellState.Blank, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank]
+        ]
+    };
 }

@@ -3,3 +3,5 @@ export enum CellState {
     X,
     O
 }
+
+export type CellStates = CellState[][];

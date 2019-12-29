@@ -1,6 +1,6 @@
 import { Spectator, createComponentFactory } from '@ngneat/spectator';
 import { GameInfoComponent } from './game-info.component';
-import { GameState } from '../game-state.interface';
+import { GameState, initialGameState } from '../game-state.interface';
 import { Player } from '../player.enum';
 
 describe('GameInfoComponent', () => {
@@ -10,9 +10,7 @@ describe('GameInfoComponent', () => {
     let gameState: GameState;
 
     beforeEach(() => {
-        gameState = {
-            turn: Player.X
-        };
+        gameState = initialGameState(),
         spectator = createComponent({
             props: {
                 gameState

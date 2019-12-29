@@ -5,7 +5,7 @@
         <app-game-info [gameState]="gameState"></app-game-info>
     </div>
     <div class="board">
-        <div class="cell">
+        <div class="cell" (click)="handleCellClick(0, 0)">
             <app-game-cell [cellState]="gameState.cellStates[0][0]"></app-game-cell>
         </div>
         <div class="cell">
