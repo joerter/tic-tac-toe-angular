@@ -1,4 +1,7 @@
 export enum Player {
     X,
-    O
+    O,
+    XWins,
+    OWins,
+    Tie
 }

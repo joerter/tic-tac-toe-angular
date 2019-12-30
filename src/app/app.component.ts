@@ -15,6 +15,6 @@ export class AppComponent {
     gameState = initialGameState();
 
     handleCellClick(cellRow: number, cellColumn: number) {
-        this.gameState = this.gameStateService.handleCellClick(cellRow, cellColumn);
+        this.gameState = this.gameStateService.handleCellClick(cellRow, cellColumn, this.gameState);
     }
 }
