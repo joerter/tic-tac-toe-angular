@@ -16,11 +16,17 @@ export class GameStateService {
     ): GameState {
         const currentCellState =
             currentGameState.cellStates[cellRow][cellColumn];
+
         if (currentCellState !== CellState.Blank) {
             return currentGameState;
         }
 
-        const cellStates = this.mapCellStates(cellRow, cellColumn, currentGameState.cellStates, currentGameState.turn);
+        const cellStates = this.mapCellStates(
+            cellRow,
+            cellColumn,
+            currentGameState.cellStates,
+            currentGameState.turn
+        );
         const turn = this.calculateTurn(cellStates, currentGameState.turn);
 
         return {
@@ -36,7 +42,10 @@ export class GameStateService {
 
         cellStates.forEach(row => {
             row.forEach(cellState => {
-                if (isPlayerXTurn && cellState === CellState.X || isPlayerOTurn && cellState === CellState.O) {
+                if (
+                    (isPlayerXTurn && cellState === CellState.X) ||
+                    (isPlayerOTurn && cellState === CellState.O)
+                ) {
                     playerCellCount++;
                 }
             });
@@ -65,9 +74,7 @@ export class GameStateService {
                     return columnState;
                 }
 
-                return playerTurn === Player.X
-                    ? CellState.X
-                    : CellState.O;
+                return playerTurn === Player.X ? CellState.X : CellState.O;
             });
         });
     }

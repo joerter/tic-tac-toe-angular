@@ -1,5 +1,5 @@
 import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
-import {GameStateService } from './game-state.service';
+import { GameStateService } from './game-state.service';
 import { initialGameState, GameState } from './game-state.interface';
 import { CellState } from './cell-state.enum';
 import { Player } from './player.enum';
@@ -10,7 +10,7 @@ describe('GameStateService', () => {
         service: GameStateService
     });
 
-    beforeEach(() => spectator = createService());
+    beforeEach(() => (spectator = createService()));
 
     it('should change CellState.Blank to CellState.X when turn is Player.X', () => {
         const currentGameState: GameState = {
@@ -22,12 +22,16 @@ describe('GameStateService', () => {
             ]
         };
         const expectedCellStates = [
-                [CellState.X, CellState.Blank, CellState.Blank],
-                [CellState.Blank, CellState.Blank, CellState.Blank],
-                [CellState.Blank, CellState.Blank, CellState.Blank]
+            [CellState.X, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank]
         ];
 
-        const nextGameState = spectator.service.handleCellClick(0, 0, currentGameState);
+        const nextGameState = spectator.service.handleCellClick(
+            0,
+            0,
+            currentGameState
+        );
 
         expect(nextGameState.cellStates).toEqual(expectedCellStates);
     });
@@ -42,12 +46,16 @@ describe('GameStateService', () => {
             ]
         };
         const expectedCellStates = [
-                [CellState.Blank, CellState.O, CellState.Blank],
-                [CellState.Blank, CellState.Blank, CellState.Blank],
-                [CellState.Blank, CellState.Blank, CellState.Blank]
+            [CellState.Blank, CellState.O, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank]
         ];
 
-        const nextGameState = spectator.service.handleCellClick(0, 1, currentGameState);
+        const nextGameState = spectator.service.handleCellClick(
+            0,
+            1,
+            currentGameState
+        );
 
         expect(nextGameState.cellStates).toEqual(expectedCellStates);
     });
@@ -62,10 +70,18 @@ describe('GameStateService', () => {
             ]
         };
 
-        let nextGameState = spectator.service.handleCellClick(0, 0, currentGameState);
+        let nextGameState = spectator.service.handleCellClick(
+            0,
+            0,
+            currentGameState
+        );
         expect(nextGameState.cellStates).toEqual(currentGameState.cellStates);
 
-        nextGameState = spectator.service.handleCellClick(0, 1, currentGameState);
+        nextGameState = spectator.service.handleCellClick(
+            0,
+            1,
+            currentGameState
+        );
         expect(nextGameState.cellStates).toEqual(currentGameState.cellStates);
     });
 
@@ -75,7 +91,11 @@ describe('GameStateService', () => {
             turn: Player.X
         };
 
-        const nextGameState = spectator.service.handleCellClick(0, 0, currentGameState);
+        const nextGameState = spectator.service.handleCellClick(
+            0,
+            0,
+            currentGameState
+        );
 
         expect(nextGameState.turn).toEqual(Player.O);
     });
@@ -86,7 +106,11 @@ describe('GameStateService', () => {
             turn: Player.O
         };
 
-        const nextGameState = spectator.service.handleCellClick(0, 0, currentGameState);
+        const nextGameState = spectator.service.handleCellClick(
+            0,
+            0,
+            currentGameState
+        );
 
         expect(nextGameState.turn).toEqual(Player.X);
     });
@@ -101,7 +125,11 @@ describe('GameStateService', () => {
             ]
         };
 
-        const nextGameState = spectator.service.handleCellClick(0, 2, currentGameState);
+        const nextGameState = spectator.service.handleCellClick(
+            0,
+            2,
+            currentGameState
+        );
 
         expect(nextGameState.turn).toEqual(Player.XWins);
     });
@@ -116,7 +144,11 @@ describe('GameStateService', () => {
             ]
         };
 
-        const nextGameState = spectator.service.handleCellClick(2, 0, currentGameState);
+        const nextGameState = spectator.service.handleCellClick(
+            2,
+            0,
+            currentGameState
+        );
 
         expect(nextGameState.turn).toEqual(Player.OWins);
     });
@@ -131,8 +163,31 @@ describe('GameStateService', () => {
             ]
         };
 
-        const nextGameState = spectator.service.handleCellClick(2, 2, currentGameState);
+        const nextGameState = spectator.service.handleCellClick(
+            2,
+            2,
+            currentGameState
+        );
 
         expect(nextGameState.turn).toEqual(Player.XWins);
+    });
+
+    it('should change to turn Player.Tie when all squares are not CelLState.Blank and there is no winner', () => {
+        const currentGameState: GameState = {
+            turn: Player.X,
+            cellStates: [
+                [CellState.Blank, CellState.O, CellState.X],
+                [CellState.O, CellState.X, CellState.O],
+                [CellState.O, CellState.X, CellState.O]
+            ]
+        };
+
+        const nextGameState = spectator.service.handleCellClick(
+            0,
+            0,
+            currentGameState
+        );
+
+        expect(nextGameState.turn).toEqual(Player.Tie);
     });
 });
