@@ -1,18 +1,33 @@
 import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
 import { GameStateService } from './game-state.service';
-import { initialGameState, GameState } from './game-state.interface';
+import { GameState } from './game-state.interface';
 import { CellState } from './cell-state.enum';
 import { Player } from './player.enum';
+import { HorizontalWinService } from 'src/app/horizontal-win.service';
+import { VerticalWinService } from 'src/app/vertical-win.service';
+import { DiagonalWinService } from './diagonal-win.service';
 
 describe('GameStateService', () => {
     let spectator: SpectatorService<GameStateService>;
     const createService = createServiceFactory({
-        service: GameStateService
+        service: GameStateService,
+        mocks: [HorizontalWinService, VerticalWinService, DiagonalWinService]
     });
 
-    beforeEach(() => (spectator = createService()));
+    beforeEach(() => {
+        spectator = createService();
 
-    it('should change CellState.Blank to CellState.X when turn is Player.X', () => {
+        const horizontalWinServiceMock = spectator.get(HorizontalWinService);
+        horizontalWinServiceMock.check.and.returnValue(false);
+
+        const verticalWinServiceMock = spectator.get(VerticalWinService);
+        verticalWinServiceMock.check.and.returnValue(false);
+
+        const diagonalWinServiceMock = spectator.get(DiagonalWinService);
+        diagonalWinServiceMock.check.and.returnValue(false);
+    });
+
+    it('should change CellState.Blank to CellState.X when turn is Player.X and the game has not ended', () => {
         const currentGameState: GameState = {
             turn: Player.X,
             cellStates: [
@@ -36,7 +51,7 @@ describe('GameStateService', () => {
         expect(nextGameState.cellStates).toEqual(expectedCellStates);
     });
 
-    it('should change CellState.Blank to CellState.O when turn is Player.O', () => {
+    it('should change CellState.Blank to CellState.O when turn is Player.O and the game has not ended', () => {
         const currentGameState: GameState = {
             turn: Player.O,
             cellStates: [
@@ -85,36 +100,6 @@ describe('GameStateService', () => {
         expect(nextGameState.cellStates).toEqual(currentGameState.cellStates);
     });
 
-    it('should change turn to Player.O when Player.X clicks a cell and the game is not over', () => {
-        const currentGameState: GameState = {
-            ...initialGameState(),
-            turn: Player.X
-        };
-
-        const nextGameState = spectator.service.handleCellClick(
-            0,
-            0,
-            currentGameState
-        );
-
-        expect(nextGameState.turn).toEqual(Player.O);
-    });
-
-    it('should change turn to Player.X when Player.O clicks a cell and the game is not over', () => {
-        const currentGameState: GameState = {
-            ...initialGameState(),
-            turn: Player.O
-        };
-
-        const nextGameState = spectator.service.handleCellClick(
-            0,
-            0,
-            currentGameState
-        );
-
-        expect(nextGameState.turn).toEqual(Player.X);
-    });
-
     it('should change to turn to Player.XWins when Player.X clicks a cell and wins the game horizontally', () => {
         const currentGameState: GameState = {
             turn: Player.X,
@@ -124,6 +109,8 @@ describe('GameStateService', () => {
                 [CellState.Blank, CellState.Blank, CellState.Blank]
             ]
         };
+        const horizontalWinServiceMock = spectator.get(HorizontalWinService);
+        horizontalWinServiceMock.check.and.returnValue(true);
 
         const nextGameState = spectator.service.handleCellClick(
             0,
@@ -132,6 +119,27 @@ describe('GameStateService', () => {
         );
 
         expect(nextGameState.turn).toEqual(Player.XWins);
+    });
+
+    it('should change to turn to Player.OWins when Player.O clicks a cell and wins the game horizontally', () => {
+        const currentGameState: GameState = {
+            turn: Player.O,
+            cellStates: [
+                [CellState.O, CellState.O, CellState.Blank],
+                [CellState.Blank, CellState.Blank, CellState.Blank],
+                [CellState.Blank, CellState.Blank, CellState.Blank]
+            ]
+        };
+        const horizontalWinServiceMock = spectator.get(HorizontalWinService);
+        horizontalWinServiceMock.check.and.returnValue(true);
+
+        const nextGameState = spectator.service.handleCellClick(
+            0,
+            2,
+            currentGameState
+        );
+
+        expect(nextGameState.turn).toEqual(Player.OWins);
     });
 
     it('should change to turn Player.OWins when Player.O clicks a cell and wins the game vertically', () => {
@@ -143,6 +151,8 @@ describe('GameStateService', () => {
                 [CellState.Blank, CellState.Blank, CellState.Blank]
             ]
         };
+        const verticalWinServiceMock = spectator.get(VerticalWinService);
+        verticalWinServiceMock.check.and.returnValue(true);
 
         const nextGameState = spectator.service.handleCellClick(
             2,
@@ -162,6 +172,9 @@ describe('GameStateService', () => {
                 [CellState.Blank, CellState.Blank, CellState.Blank]
             ]
         };
+
+        const diagonalWinServiceMock = spectator.get(DiagonalWinService);
+        diagonalWinServiceMock.check.and.returnValue(true);
 
         const nextGameState = spectator.service.handleCellClick(
             2,

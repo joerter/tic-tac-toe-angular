@@ -2,12 +2,19 @@ import { Injectable } from '@angular/core';
 import { GameState } from './game-state.interface';
 import { CellState, CellStates } from './cell-state.enum';
 import { Player } from './player.enum';
+import { HorizontalWinService } from 'src/app/horizontal-win.service';
+import { VerticalWinService } from 'src/app/vertical-win.service';
+import { DiagonalWinService } from 'src/app/diagonal-win.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GameStateService {
-    constructor() {}
+    constructor(
+        private horizontalWinService: HorizontalWinService,
+        private verticalWinService: VerticalWinService,
+        private diagonalWinService: DiagonalWinService
+    ) {}
 
     handleCellClick(
         cellRow: number,
@@ -36,26 +43,20 @@ export class GameStateService {
     }
 
     private calculateTurn(cellStates: CellStates, turn: Player) {
-        let playerCellCount = 0;
-        const isPlayerXTurn = turn === Player.X;
-        const isPlayerOTurn = turn === Player.O;
+        const isXTurn = turn === Player.X;
 
-        cellStates.forEach(row => {
-            row.forEach(cellState => {
-                if (
-                    (isPlayerXTurn && cellState === CellState.X) ||
-                    (isPlayerOTurn && cellState === CellState.O)
-                ) {
-                    playerCellCount++;
-                }
-            });
-        });
+        const winningPlayer = isXTurn ? Player.XWins : Player.OWins;
+        const nextTurn = isXTurn ? Player.O : Player.X;
 
-        if (playerCellCount === 3) {
-            return isPlayerXTurn ? Player.XWins : Player.OWins;
+        if (
+            this.horizontalWinService.check(cellStates, turn) ||
+            this.verticalWinService.check(cellStates, turn) ||
+            this.diagonalWinService.check(cellStates, turn)
+        ) {
+            return winningPlayer;
         }
 
-        return isPlayerXTurn ? Player.O : Player.X;
+        return nextTurn;
     }
 
     private mapCellStates(
