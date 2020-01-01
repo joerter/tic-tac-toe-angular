@@ -5,6 +5,7 @@ import { Player } from './player.enum';
 import { HorizontalWinService } from 'src/app/horizontal-win.service';
 import { VerticalWinService } from 'src/app/vertical-win.service';
 import { DiagonalWinService } from 'src/app/diagonal-win.service';
+import { TieService } from 'src/app/tie.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,8 @@ export class GameStateService {
     constructor(
         private horizontalWinService: HorizontalWinService,
         private verticalWinService: VerticalWinService,
-        private diagonalWinService: DiagonalWinService
+        private diagonalWinService: DiagonalWinService,
+        private tieService: TieService
     ) {}
 
     handleCellClick(
@@ -54,6 +56,10 @@ export class GameStateService {
             this.diagonalWinService.check(cellStates, turn)
         ) {
             return winningPlayer;
+        }
+
+        if (this.tieService.check(cellStates)) {
+            return Player.Tie;
         }
 
         return nextTurn;
