@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { initialGameState } from './game-state.interface';
-import { Player } from './player.enum';
+import { TurnState } from './player.enum';
 import { CellStates, CellState } from './cell-state.enum';
 import { GameStateService } from './game-state.service';
 

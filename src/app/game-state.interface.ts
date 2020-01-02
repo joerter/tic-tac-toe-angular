@@ -1,14 +1,14 @@
-import { Player } from './player.enum';
+import { TurnState } from './player.enum';
 import { CellState, CellStates } from './cell-state.enum';
 
 export interface GameState {
-    turn: Player;
+    turnState: TurnState;
     cellStates: CellStates;
 }
 
 export function initialGameState(): GameState {
     return {
-        turn: Player.X,
+        turnState: TurnState.XTurn,
         cellStates: [
             [CellState.Blank, CellState.Blank, CellState.Blank],
             [CellState.Blank, CellState.Blank, CellState.Blank],

@@ -1,7 +1,7 @@
 import { Spectator, createComponentFactory } from '@ngneat/spectator';
 import { AppComponent } from './app.component';
 import { GameState, initialGameState } from './game-state.interface';
-import { Player } from './player.enum';
+import { TurnState } from './player.enum';
 import { CellState } from './cell-state.enum';
 import { GameCellComponent } from './game-cell/game-cell.component';
 import { GameStateService } from './game-state.service';
@@ -24,7 +24,7 @@ describe('AppComponent', () => {
 
     it('should update the gameState when a cell is clicked', () => {
         const expectedGameState: GameState = {
-            turn: Player.O,
+            turnState: TurnState.OTurn,
             cellStates: [
                 [CellState.X, CellState.Blank, CellState.Blank],
                 [CellState.Blank, CellState.Blank, CellState.Blank],

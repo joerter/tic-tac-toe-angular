@@ -1,7 +1,7 @@
 import { Spectator, createComponentFactory } from '@ngneat/spectator';
 import { GameInfoComponent } from './game-info.component';
 import { GameState, initialGameState } from '../game-state.interface';
-import { Player } from '../player.enum';
+import { TurnState } from '../player.enum';
 
 describe('GameInfoComponent', () => {
     let spectator: Spectator<GameInfoComponent>;
@@ -19,7 +19,7 @@ describe('GameInfoComponent', () => {
     });
 
     it('should display Player X turn when state is Player.X', () => {
-        gameState.turn = Player.X;
+        gameState.turnState = TurnState.XTurn;
         spectator.setInput('gameState', gameState);
         spectator.detectChanges();
 
@@ -27,7 +27,7 @@ describe('GameInfoComponent', () => {
     });
 
     it('should display Player O turn when state is Player.O', () => {
-        gameState.turn = Player.O;
+        gameState.turnState = TurnState.OTurn;
         spectator.setInput('gameState', gameState);
         spectator.detectChanges();
 

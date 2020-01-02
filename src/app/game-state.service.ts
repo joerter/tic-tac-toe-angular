@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GameState } from './game-state.interface';
 import { CellState, CellStates } from './cell-state.enum';
-import { Player } from './player.enum';
+import { TurnState } from './player.enum';
 import { HorizontalWinService } from 'src/app/horizontal-win.service';
 import { VerticalWinService } from 'src/app/vertical-win.service';
 import { DiagonalWinService } from 'src/app/diagonal-win.service';
@@ -34,21 +34,21 @@ export class GameStateService {
             cellRow,
             cellColumn,
             currentGameState.cellStates,
-            currentGameState.turn
+            currentGameState.turnState
         );
-        const turn = this.calculateTurn(cellStates, currentGameState.turn);
+        const turn = this.calculateTurn(cellStates, currentGameState.turnState);
 
         return {
-            turn,
+            turnState: turn,
             cellStates
         };
     }
 
-    private calculateTurn(cellStates: CellStates, turn: Player) {
-        const isXTurn = turn === Player.X;
+    private calculateTurn(cellStates: CellStates, turn: TurnState) {
+        const isXTurn = turn === TurnState.XTurn;
 
-        const winningPlayer = isXTurn ? Player.XWins : Player.OWins;
-        const nextTurn = isXTurn ? Player.O : Player.X;
+        const winningPlayer = isXTurn ? TurnState.XWins : TurnState.OWins;
+        const nextTurn = isXTurn ? TurnState.OTurn : TurnState.XTurn;
 
         if (
             this.horizontalWinService.check(cellStates, turn) ||
@@ -59,7 +59,7 @@ export class GameStateService {
         }
 
         if (this.tieService.check(cellStates)) {
-            return Player.Tie;
+            return TurnState.Tie;
         }
 
         return nextTurn;
@@ -69,7 +69,7 @@ export class GameStateService {
         cellRow: number,
         cellColumn: number,
         currentCellStates: CellStates,
-        playerTurn: Player
+        playerTurn: TurnState
     ) {
         return currentCellStates.map((rowState, rowIndex) => {
             if (rowIndex !== cellRow) {
@@ -81,7 +81,9 @@ export class GameStateService {
                     return columnState;
                 }
 
-                return playerTurn === Player.X ? CellState.X : CellState.O;
+                return playerTurn === TurnState.XTurn
+                    ? CellState.X
+                    : CellState.O;
             });
         });
     }

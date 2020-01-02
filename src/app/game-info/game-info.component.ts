@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GameState } from '../game-state.interface';
-import { Player } from '../player.enum';
+import { TurnState } from '../player.enum';
 
 @Component({
     selector: 'app-game-info',
@@ -10,8 +10,8 @@ import { Player } from '../player.enum';
 export class GameInfoComponent implements OnInit {
     @Input() gameState: GameState;
 
-    playerX = Player.X;
-    playerO = Player.O;
+    playerX = TurnState.XTurn;
+    playerO = TurnState.OTurn;
 
     constructor() {}
 

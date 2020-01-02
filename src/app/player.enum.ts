@@ -1,6 +1,6 @@
-export enum Player {
-    X,
-    O,
+export enum TurnState {
+    XTurn,
+    OTurn,
     XWins,
     OWins,
     Tie
