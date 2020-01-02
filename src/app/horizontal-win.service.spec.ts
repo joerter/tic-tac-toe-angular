@@ -10,7 +10,11 @@ describe('HorizontalWinService', () => {
     beforeEach(() => (spectator = createService()));
 
     it('should return false when is not a horizontal win', () => {
-        const cellStates = [[CellState.Blank]];
+        const cellStates = [
+            [CellState.Blank, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank]
+        ];
 
         const result = spectator.service.check(cellStates);
 
