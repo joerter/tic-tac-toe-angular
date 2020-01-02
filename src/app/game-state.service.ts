@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GameState } from './game-state.interface';
 import { CellState, CellStates } from './cell-state.enum';
-import { TurnState } from './player.enum';
+import { TurnState } from './turn-state.enum';
 import { HorizontalWinService } from 'src/app/horizontal-win.service';
 import { VerticalWinService } from 'src/app/vertical-win.service';
 import { DiagonalWinService } from 'src/app/diagonal-win.service';
@@ -36,25 +36,24 @@ export class GameStateService {
             currentGameState.cellStates,
             currentGameState.turnState
         );
-        const turn = this.calculateTurn(cellStates, currentGameState.turnState);
+        const turnState = this.calculateTurnState(
+            cellStates,
+            currentGameState.turnState
+        );
 
         return {
-            turnState: turn,
+            turnState,
             cellStates
         };
     }
 
-    private calculateTurn(cellStates: CellStates, turn: TurnState) {
+    private calculateTurnState(cellStates: CellStates, turn: TurnState) {
         const isXTurn = turn === TurnState.XTurn;
 
         const winningPlayer = isXTurn ? TurnState.XWins : TurnState.OWins;
-        const nextTurn = isXTurn ? TurnState.OTurn : TurnState.XTurn;
+        const nextTurnState = isXTurn ? TurnState.OTurn : TurnState.XTurn;
 
-        if (
-            this.horizontalWinService.check(cellStates, turn) ||
-            this.verticalWinService.check(cellStates, turn) ||
-            this.diagonalWinService.check(cellStates, turn)
-        ) {
+        if (this.isWinningMove(cellStates, turn)) {
             return winningPlayer;
         }
 
@@ -62,7 +61,15 @@ export class GameStateService {
             return TurnState.Tie;
         }
 
-        return nextTurn;
+        return nextTurnState;
+    }
+
+    private isWinningMove(cellStates: CellState[][], turn: TurnState) {
+        return (
+            this.horizontalWinService.check(cellStates, turn) ||
+            this.verticalWinService.check(cellStates, turn) ||
+            this.diagonalWinService.check(cellStates, turn)
+        );
     }
 
     private mapCellStates(

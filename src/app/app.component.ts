@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { initialGameState } from './game-state.interface';
-import { TurnState } from './player.enum';
-import { CellStates, CellState } from './cell-state.enum';
 import { GameStateService } from './game-state.service';
 
 @Component({
@@ -15,6 +13,10 @@ export class AppComponent {
     gameState = initialGameState();
 
     handleCellClick(cellRow: number, cellColumn: number) {
-        this.gameState = this.gameStateService.handleCellClick(cellRow, cellColumn, this.gameState);
+        this.gameState = this.gameStateService.handleCellClick(
+            cellRow,
+            cellColumn,
+            this.gameState
+        );
     }
 }

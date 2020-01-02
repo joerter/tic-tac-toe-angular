@@ -1,9 +1,8 @@
 import { Spectator, createComponentFactory } from '@ngneat/spectator';
 import { AppComponent } from './app.component';
 import { GameState, initialGameState } from './game-state.interface';
-import { TurnState } from './player.enum';
+import { TurnState } from './turn-state.enum';
 import { CellState } from './cell-state.enum';
-import { GameCellComponent } from './game-cell/game-cell.component';
 import { GameStateService } from './game-state.service';
 
 describe('AppComponent', () => {

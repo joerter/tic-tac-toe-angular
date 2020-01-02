@@ -1,4 +1,4 @@
-import { TurnState } from './player.enum';
+import { TurnState } from './turn-state.enum';
 import { CellState, CellStates } from './cell-state.enum';
 
 export interface GameState {
