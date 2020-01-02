@@ -30,13 +30,13 @@ export class GameStateService {
             return currentGameState;
         }
 
-        const cellStates = this.mapCellStates(
+        const cellStates = this.updateCellStates(
             cellRow,
             cellColumn,
             currentGameState.cellStates,
             currentGameState.turnState
         );
-        const turnState = this.calculateTurnState(
+        const turnState = this.updateTurnState(
             cellStates,
             currentGameState.turnState
         );
@@ -47,13 +47,13 @@ export class GameStateService {
         };
     }
 
-    private calculateTurnState(cellStates: CellStates, turn: TurnState) {
+    private updateTurnState(cellStates: CellStates, turn: TurnState) {
         const isXTurn = turn === TurnState.XTurn;
 
         const winningPlayer = isXTurn ? TurnState.XWins : TurnState.OWins;
         const nextTurnState = isXTurn ? TurnState.OTurn : TurnState.XTurn;
 
-        if (this.isWinningMove(cellStates, turn)) {
+        if (this.isWinningMove(cellStates)) {
             return winningPlayer;
         }
 
@@ -64,15 +64,15 @@ export class GameStateService {
         return nextTurnState;
     }
 
-    private isWinningMove(cellStates: CellState[][], turn: TurnState) {
+    private isWinningMove(cellStates: CellState[][]) {
         return (
-            this.horizontalWinService.check(cellStates, turn) ||
-            this.verticalWinService.check(cellStates, turn) ||
-            this.diagonalWinService.check(cellStates, turn)
+            this.horizontalWinService.check(cellStates) ||
+            this.verticalWinService.check(cellStates) ||
+            this.diagonalWinService.check(cellStates)
         );
     }
 
-    private mapCellStates(
+    private updateCellStates(
         cellRow: number,
         cellColumn: number,
         currentCellStates: CellStates,

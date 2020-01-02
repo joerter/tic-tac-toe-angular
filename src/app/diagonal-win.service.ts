@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CellStates } from './cell-state.enum';
-import { TurnState } from './turn-state.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -8,7 +7,7 @@ import { TurnState } from './turn-state.enum';
 export class DiagonalWinService {
     constructor() {}
 
-    check(cellStates: CellStates, turn: TurnState) {
+    check(cellStates: CellStates) {
         return false;
     }
 }
