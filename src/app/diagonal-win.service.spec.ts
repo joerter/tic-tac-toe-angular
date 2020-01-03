@@ -1,12 +1,46 @@
-import { TestBed } from '@angular/core/testing';
-
-import { DiagonalWinService } from './diagonal-win.service';
+import { SpectatorService, createServiceFactory } from '@ngneat/spectator';
+import { DiagonalWinService } from 'src/app/diagonal-win.service';
+import {CellState} from 'src/app/cell-state.enum';
 
 describe('DiagonalWinService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+    let spectator: SpectatorService<DiagonalWinService>;
+    const createService = createServiceFactory(DiagonalWinService);
 
-  it('should be created', () => {
-    const service: DiagonalWinService = TestBed.get(DiagonalWinService);
-    expect(service).toBeTruthy();
-  });
+    beforeEach(() => (spectator = createService()));
+
+    it('should return false when is not a diagonal win', () => {
+        const cellStates = [
+            [CellState.Blank, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.Blank]
+        ];
+
+        const result = spectator.service.check(cellStates);
+
+        expect(result).toEqual(false);
+    });
+
+    it('should return true when is diagonal win from left to right', () => {
+        const cellStates = [
+            [CellState.X, CellState.Blank, CellState.Blank],
+            [CellState.Blank, CellState.X, CellState.Blank],
+            [CellState.Blank, CellState.Blank, CellState.X],
+        ];
+
+        const result = spectator.service.check(cellStates);
+
+        expect(result).toEqual(true);
+    });
+
+    it('should return true when is diagonal win from right to left', () => {
+        const cellStates = [
+            [CellState.Blank, CellState.Blank, CellState.O],
+            [CellState.Blank, CellState.O, CellState.Blank],
+            [CellState.O, CellState.Blank, CellState.Blank]
+        ];
+
+        const result = spectator.service.check(cellStates);
+
+        expect(result).toEqual(true);
+    });
 });
