@@ -3,6 +3,8 @@
         <h1>Tic Tac Toe</h1>
 
         <app-game-info [gameState]="gameState"></app-game-info>
+
+        <button type="button" id="reset" *ngIf="gameHasEnded" (click)="resetGameState()">Reset</button>
     </div>
     <div class="board">
         <div class="cell" (click)="handleCellClick(0, 0)">
