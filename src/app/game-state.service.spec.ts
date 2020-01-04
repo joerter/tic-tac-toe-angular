@@ -6,18 +6,12 @@ import { TurnState } from './turn-state.enum';
 import { HorizontalWinService } from 'src/app/horizontal-win.service';
 import { VerticalWinService } from 'src/app/vertical-win.service';
 import { DiagonalWinService } from './diagonal-win.service';
-import { TieService } from 'src/app/tie.service';
 
 describe('GameStateService', () => {
     let spectator: SpectatorService<GameStateService>;
     const createService = createServiceFactory({
         service: GameStateService,
-        mocks: [
-            HorizontalWinService,
-            VerticalWinService,
-            DiagonalWinService,
-            TieService
-        ]
+        mocks: [HorizontalWinService, VerticalWinService, DiagonalWinService]
     });
 
     beforeEach(() => {
@@ -31,9 +25,6 @@ describe('GameStateService', () => {
 
         const diagonalWinServiceMock = spectator.get(DiagonalWinService);
         diagonalWinServiceMock.check.and.returnValue(false);
-
-        const tieServiceMock = spectator.get(TieService);
-        tieServiceMock.check.and.returnValue(false);
     });
 
     it('should change CellState.Blank to CellState.X when turnState is TurnState.XTurn and the game has not ended', () => {
@@ -187,13 +178,20 @@ describe('GameStateService', () => {
     });
 
     it('should change to turn Player.Tie when all squares are not CellState.Blank and there is no winner', () => {
-        const tieServiceMock = spectator.get(TieService);
-        tieServiceMock.check.and.returnValue(true);
+        const cellStates = [
+            [CellState.X, CellState.O, CellState.X],
+            [CellState.O, CellState.X, CellState.O],
+            [CellState.O, CellState.X, CellState.Blank]
+        ];
+        const currentGameState = {
+            turnState: TurnState.OTurn,
+            cellStates
+        } as GameState;
 
         const nextGameState = spectator.service.handleCellClick(
-            0,
-            0,
-            initialGameState()
+            2,
+            2,
+            currentGameState
         );
 
         expect(nextGameState.turnState).toEqual(TurnState.Tie);

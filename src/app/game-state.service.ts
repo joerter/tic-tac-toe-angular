@@ -5,7 +5,6 @@ import { TurnState } from './turn-state.enum';
 import { HorizontalWinService } from 'src/app/horizontal-win.service';
 import { VerticalWinService } from 'src/app/vertical-win.service';
 import { DiagonalWinService } from 'src/app/diagonal-win.service';
-import { TieService } from 'src/app/tie.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,8 +13,7 @@ export class GameStateService {
     constructor(
         private horizontalWinService: HorizontalWinService,
         private verticalWinService: VerticalWinService,
-        private diagonalWinService: DiagonalWinService,
-        private tieService: TieService
+        private diagonalWinService: DiagonalWinService
     ) {}
 
     handleCellClick(
@@ -57,11 +55,23 @@ export class GameStateService {
             return winningPlayer;
         }
 
-        if (this.tieService.check(cellStates)) {
+        if (!this.hasCellStateBlank(cellStates)) {
             return TurnState.Tie;
         }
 
         return nextTurnState;
+    }
+
+    private hasCellStateBlank(cellStates: CellState[][]) {
+        for (let row = 0; row <= 2; row++) {
+            for (let column = 0; column <= 2; column++) {
+                if (cellStates[row][column] === CellState.Blank) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private isWinningMove(cellStates: CellState[][]) {
