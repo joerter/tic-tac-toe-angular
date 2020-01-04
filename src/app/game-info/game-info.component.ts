@@ -12,4 +12,9 @@ export class GameInfoComponent {
 
     playerX = TurnState.XTurn;
     playerO = TurnState.OTurn;
+
+    playerXWins = TurnState.XWins;
+    playerOWins = TurnState.OWins;
+
+    tie = TurnState.Tie;
 }

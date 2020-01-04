@@ -19,18 +19,38 @@ describe('GameInfoComponent', () => {
     });
 
     it('should display Player X turn when turnState is TurnState.XTurn', () => {
-        gameState.turnState = TurnState.XTurn;
-        spectator.setInput('gameState', gameState);
-        spectator.detectChanges();
-
-        expect(spectator.query('#turn-display')).toContainText('Player X Turn');
+        setTurnStateTo(TurnState.XTurn);
+        expectTurnDisplayToBe('Player X Turn');
     });
 
     it('should display Player O turn when turnState is TurnState.OTurn', () => {
-        gameState.turnState = TurnState.OTurn;
-        spectator.setInput('gameState', gameState);
-        spectator.detectChanges();
-
-        expect(spectator.query('#turn-display')).toContainText('Player O Turn');
+        setTurnStateTo(TurnState.OTurn);
+        expectTurnDisplayToBe('Player O Turn');
     });
+
+    it('should display Player X wins when turnState is TurnState.XWins', () => {
+        setTurnStateTo(TurnState.XWins);
+        expectTurnDisplayToBe('Player X Wins');
+    });
+
+    it('should display Player O wins when turnState is TurnState.OWins', () => {
+        setTurnStateTo(TurnState.OWins);
+        expectTurnDisplayToBe('Player O Wins');
+    });
+
+    it('should display Tie when turnState is TurnState.Tie', () => {
+        setTurnStateTo(TurnState.Tie);
+        expectTurnDisplayToBe('Tie');
+    });
+
+    function setTurnStateTo(turnState: TurnState) {
+        gameState.turnState = turnState;
+        spectator.setInput('gameState', gameState);
+
+        spectator.detectChanges();
+    }
+
+    function expectTurnDisplayToBe(text: string) {
+        expect(spectator.query('#turn-display')).toContainText(text);
+    }
 });

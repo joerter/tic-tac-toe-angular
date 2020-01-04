@@ -1,3 +1,22 @@
 <div id="turn-display">
-    Player {{ gameState.turnState === playerX ? 'X' : 'O'}} Turn
+    <ng-container
+        *ngIf="
+            gameState.turnState === playerX || gameState.turnState === playerO
+        "
+    >
+        Player {{ gameState.turnState === playerX ? 'X' : 'O' }} Turn
+    </ng-container>
+
+    <ng-container
+        *ngIf="
+            gameState.turnState === playerXWins ||
+            gameState.turnState === playerOWins
+        "
+    >
+        Player {{ gameState.turnState === playerXWins ? 'X' : 'O' }} Wins!
+    </ng-container>
+
+    <ng-container *ngIf="gameState.turnState === tie">
+        Tie!
+    </ng-container>
 </div>
