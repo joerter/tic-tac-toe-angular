@@ -1,3 +1,0 @@
-- come up with a better name for the Player enum and for turn key on gameState
-- start extracting out win services right away
-- no need to setup gamestate in GameStateService
