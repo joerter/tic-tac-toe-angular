@@ -4,14 +4,32 @@
     </div>
 
     <div class="board">
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
+        <div class="cell" (click)="handleCellClick(0, 0)">
+            {{ gameState.cellStates[0][0] | cellState }}
+        </div>
+        <div class="cell" (click)="handleCellClick(0, 1)">
+            {{ gameState.cellState[0][1] | cellState}}
+        </div>
+        <div class="cell" (click)="handleCellClick(0, 2)">
+            {{ gameState.cellState[0][2] | cellState }}
+        </div>
+        <div class="cell" (click)="handleCellClick(1, 0)">
+            {{ gameState.cellState[1][0] | cellState }}
+        </div>
+        <div class="cell" (click)="handleCellClick(1, 1)">
+            {{ gameState.cellState[1][1] | cellState }}
+        </div>
+        <div class="cell" (click)="handleCellClick(1, 2)">
+            {{ gameState.cellState[1][2] | cellState }}
+        </div>
+        <div class="cell" (click)="handleCellClick(2, 0)">
+            {{ gameState.cellState[2][0] | cellState }}
+        </div>
+        <div class="cell" (click)="handleCellClick(2, 1)">
+            {{ gameState.cellState[2][1] | cellState }}
+        </div>
+        <div class="cell" (click)="handleCellClick(2, 2)">
+            {{ gameState.cellState[2][2] | cellState }}
+        </div>
     </div>
 </div>
