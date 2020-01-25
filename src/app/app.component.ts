@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { GameStateService } from 'src/app/game-state.service';
 import { GameState, initialGameState } from 'src/app/game-state.interface';
-import {CellState} from 'src/app/cell-state.enum';
+import { CellState } from 'src/app/cell-state.enum';
 
 @Component({
     selector: 'app-root',
@@ -19,5 +19,9 @@ export class AppComponent {
             column,
             this.gameState
         );
+    }
+
+    resetGameState() {
+        this.gameState = initialGameState();
     }
 }

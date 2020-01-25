@@ -1,9 +1,22 @@
 <div class="tic-tac-toe">
     <div class="game-info">
         <h1>Tic Tac Toe</h1>
+
+        <div class="turn-state">
+            {{ gameState.turnState | turnState }}
+        </div>
+
+        <button
+            type="button"
+            id="reset-button"
+            *ngIf="gameState.turnState | gameHasEnded"
+            (click)="resetGameState()"
+        >
+            Reset
+        </button>
     </div>
 
-    <div class="board">
+    <div class="board" [class.hidden]="gameState.turnState | gameHasEnded">
         <div class="cell" (click)="handleCellClick(0, 0)">
             {{ gameState.cellStates[0][0] | cellState }}
         </div>

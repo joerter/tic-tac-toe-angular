@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {CellState} from 'src/app/cell-state.enum';
+import { CellState } from './cell-state.enum';
 
 @Pipe({
     name: 'cellState'
